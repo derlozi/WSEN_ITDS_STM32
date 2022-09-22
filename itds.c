@@ -94,6 +94,13 @@ void itds_startConversion(I2C_HandleTypeDef* hi2c)
 	writeReg(hi2c, ITDS_CTRL_3, &buf);
 }
 
+float itds_getTemperature(I2C_HandleTypeDef* hi2c)
+{
+	int16_t readOut;
+	HAL_I2C_Mem_Read(hi2c, ITDS_SLAVE_ADDRESS, ITDS_T_OUT_L, 1, (uint8_t*) &readOut, 1, HAL_MAX_DELAY);
+	return (((float_t)readout / 16.0) + 25.0);
+}
+
 //helper function to avoid having to enter same arguments every time Mem_read is called
 void readReg(I2C_HandleTypeDef* hi2c, uint8_t regAddress, uint8_t* buf)
 {

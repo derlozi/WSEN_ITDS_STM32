@@ -14,6 +14,8 @@
 
 //Register definitions
 #define ITDS_DEVICE_ID 0x0F
+#define ITDS_T_OUT_L 0x0D
+#define ITDS_T_OUT_H 0x0E
 #define ITDS_CTRL_1 0x20
 #define ITDS_CTRL_2 0x21
 #define ITDS_CTRL_3 0x22
@@ -31,6 +33,7 @@
 //FIFO and Events not implemented yet
 #define ITDS_STATUS_DETECT 0x37
 #define ITDS_CTRL_7 0x3F
+
 
 //sub-register definitions
 //for CTRL_1
