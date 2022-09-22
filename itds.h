@@ -54,7 +54,33 @@
 #define ITDS_ODR_8 0x80
 #define ITDS_ODR_9 0x90
 
-
+//For CTRL_4
+#define ITDS_INT0_6D 0x80
+#define ITDS_INT0_SINGLE_TAP 0x40
+#define ITDS_INT0_WU 0x20
+#define ITDS_INT0_FF 0x10
+#define ITDS_INT0_TAP 0x08
+#define ITDS_INT0_DIFF5 0x04
+#define ITDS_INT0_FTH 0x02
+#define ITDS_INT0_DRDY 0x01
+//For CTRL_5
+#define ITDS_INT1_SLEEP_STATE 0x80
+#define ITDS_INT1_SLEEP_CHG 0x40
+#define ITDS_INT1_BOOT 0x20
+#define ITDS_INT1_DRDY_T 0x10
+#define ITDS_INT1_OVR 0x08
+#define ITDS_INT1_DIFF5 0x04
+#define ITDS_INT1_FTH 0x02
+#define ITDS_INT1_DRDY 0x01
+//for STATUS
+#define ITDS_STATUS_FIFO_THS 0x80
+#define ITDS_STATUS_WU_IA 0x40
+#define ITDS_STATUS_SLEEP_STATE 0x20
+#define ITDS_STATUS_DOUBLE_TAP 0x10
+#define ITDS_STATUS_SINGLE_TAP 0x08
+#define ITDS_STATUS_6D_IA 0x04
+#define ITDS_STATUS_FF_IA 0x02
+#define ITDS_STATUS_DRDY 0x01
 //For CTRL_6
 #define ITDS_LOWNOISE_ON 0x04
 #define ITDS_LOWNOISE_OFF 0x00
@@ -71,6 +97,10 @@
 
 #define ITDS_LOWPASS_ENABLE 0x00
 #define ITDS_HIGHPASS_ENABLE 0x08
+
+//other definitions
+#define ITDS_MASKOR 0
+#define ITDS_MASKAND 1
 
 //structs
 struct itds_data{double x; double y; double z;};//contains acceleration values in mg

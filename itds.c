@@ -100,6 +100,50 @@ float itds_getTemperature(I2C_HandleTypeDef* hi2c)
 	HAL_I2C_Mem_Read(hi2c, ITDS_SLAVE_ADDRESS, ITDS_T_OUT_L, 1, (uint8_t*) &readOut, 1, HAL_MAX_DELAY);
 	return (((float_t)readout / 16.0) + 25.0);
 }
+//interrupts can be OR-Connection of constants of the form ITDS_INT0_XY or ITDS_INT1_XY
+void routeInterrupts(I2C_HandleTypeDef* hi2c, uint8_t interrupt, uint8_t interrupts)
+{
+	uint8t_t data = interrupts;
+	if(interrupt == 0)
+	{
+		writeReg(hi2c, ITDS_CTRL_4, &data);
+	}
+	else if(interrupt == 1)
+	{
+		writeReg(hi2c, ITDS_CTRL_4, &data);
+	}
+}
+
+//Check bits in the status register
+uint8_t checkStatus(I2C_HandleTypeDef hi2c, uint8_t statusbit)
+{
+	uint8_t data;
+	readReg(&hi2c, ITDS_STATUS, &data);
+	if(data&statusbit)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+//maskfunction should either be ITDS_MASKOR or ITDS_MASKAND
+void maskReg(I2C_HandleTypeDef* hi2c, uint8_t maskFunction, uint8_t regAddress, uint8_t mask)
+{
+	uint8_t data;
+	readReg(hi2c, regAddress, &data);
+	if(maskFunction==ITDS_MASKOR)
+	{
+		data |= mask;
+	}
+	else
+	{
+		data &= mask;
+	}
+	writeReg(hi2c, regAddress, &data);
+}
 
 //helper function to avoid having to enter same arguments every time Mem_read is called
 void readReg(I2C_HandleTypeDef* hi2c, uint8_t regAddress, uint8_t* buf)
