@@ -88,7 +88,7 @@
 #define ITDS_BWDIV_2 0x00
 #define ITDS_BWDIV_4 0x40
 #define ITDS_BWDIV_10 0x80
-#define ITDS_BWDIV_20 0xA0
+#define ITDS_BWDIV_20 0xC0
 
 #define ITDS_SCALE_2G 0x00
 #define ITDS_SCALE_4G 0x10
@@ -112,5 +112,6 @@ uint8_t itds_pollData(I2C_HandleTypeDef* hi2c);
 void itds_startConversion(I2C_HandleTypeDef* hi2c);
 double itds_getTemperature(I2C_HandleTypeDef* hi2c);
 void routeInterrupts(I2C_HandleTypeDef* hi2c, uint8_t interrupt, uint8_t interrupts);
+uint8_t checkStatus(I2C_HandleTypeDef hi2c, uint8_t statusbit);
 
 #endif /* INC_ITDS_H_ */
