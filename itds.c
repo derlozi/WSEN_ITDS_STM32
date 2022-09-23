@@ -94,16 +94,18 @@ void itds_startConversion(I2C_HandleTypeDef* hi2c)
 	writeReg(hi2c, ITDS_CTRL_3, &buf);
 }
 
-float itds_getTemperature(I2C_HandleTypeDef* hi2c)
+double itds_getTemperature(I2C_HandleTypeDef* hi2c)
 {
-	int16_t readOut;
-	HAL_I2C_Mem_Read(hi2c, ITDS_SLAVE_ADDRESS, ITDS_T_OUT_L, 1, (uint8_t*) &readOut, 1, HAL_MAX_DELAY);
-	return (((float_t)readout / 16.0) + 25.0);
+	uint8_t data[2];
+	HAL_I2C_Mem_Read(hi2c, ITDS_SLAVE_ADDRESS, ITDS_T_OUT_L, 1, data, 2, HAL_MAX_DELAY);
+	int16_t readOut = (data[0] + (int16_t)(data[1]<<8));
+	double temp = (readOut>>4)/16.0 + 25.0;
+	return temp;
 }
-//interrupts can be OR-Connection of constants of the form ITDS_INT0_XY or ITDS_INT1_XY
+//argument interrupts can be OR-Connection of constants of the form ITDS_INT0_XY or ITDS_INT1_XY
 void routeInterrupts(I2C_HandleTypeDef* hi2c, uint8_t interrupt, uint8_t interrupts)
 {
-	uint8t_t data = interrupts;
+	uint8_t data = interrupts;
 	if(interrupt == 0)
 	{
 		writeReg(hi2c, ITDS_CTRL_4, &data);
@@ -127,6 +129,13 @@ uint8_t checkStatus(I2C_HandleTypeDef hi2c, uint8_t statusbit)
 	{
 		return 0;
 	}
+}
+//configures tap event recognition, tap events are enabled for all directions using same threshold
+//Refer to datasheet section 18.22 and 18.23
+void itds_configure_Tap_Event(uint8_t threshold, uint8_t latency, uint8_t quiet, uint8_t shock, uint8_t doubleTapEn)
+{
+	uint8_t data = threshold;
+	//TODO: find solution to write data to reg without disturbing existing data
 }
 
 //maskfunction should either be ITDS_MASKOR or ITDS_MASKAND

@@ -109,5 +109,8 @@ struct itds_data{double x; double y; double z;};//contains acceleration values i
 HAL_StatusTypeDef itds_init(I2C_HandleTypeDef* hi2c, uint8_t mode, uint8_t bandwidth, uint8_t scale, uint8_t ODR, uint8_t noiseMode, uint8_t filter);
 struct itds_data itds_readData(I2C_HandleTypeDef* hi2c, uint8_t scaleSetting, uint8_t modeSetting);
 uint8_t itds_pollData(I2C_HandleTypeDef* hi2c);
+void itds_startConversion(I2C_HandleTypeDef* hi2c);
+double itds_getTemperature(I2C_HandleTypeDef* hi2c);
+void routeInterrupts(I2C_HandleTypeDef* hi2c, uint8_t interrupt, uint8_t interrupts);
 
 #endif /* INC_ITDS_H_ */
